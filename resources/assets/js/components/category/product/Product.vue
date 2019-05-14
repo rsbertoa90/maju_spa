@@ -12,8 +12,10 @@
         </div>
         <div class="col-12 row">
             <div class="col-12 col-lg-8">
-                <card :i="i" v-if="$mq=='lg'" :hideHead="true" :product="product"></card>
-                <small-card :i="i" v-else :product="product"></small-card>
+                <div class="row">
+                    <card :i="i" v-if="$mq=='lg'" :hideHead="true" :product="product"></card>
+                    <small-card :i="i" v-else :product="product"></small-card>
+                </div>
                 <div class="small-images row" v-if="product.images[1]">
                     <div  class="small-image col-3" v-for="(image,key) in product.images" :key="image.url" @click="i =key">
                         <v-lazy-image  :src="image.url" :alt="product.name"></v-lazy-image>
@@ -29,7 +31,7 @@
            <p> {{product.description |ucFirst}} </p>
         </div>
 
-        <div class="col-12" v-if="category">
+        <div class="col-12 mt-4" v-if="category">
             <related-products :products="category.products"></related-products>
         </div>
         
