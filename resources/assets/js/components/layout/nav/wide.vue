@@ -78,6 +78,9 @@
                             <li class="nav-item " v-if="user && user.role_id < 3">
                                 <router-link class="nav-link text-white" to="/admin/busquedas"> <fa-icon icon="user-cog"></fa-icon> Busquedas </router-link>
                             </li>
+                            <li class="nav-item " v-if="issuper">
+                                <router-link class="nav-link text-white" to="/stats"> <fa-icon icon="user-cog"></fa-icon> Estadisticas de compras </router-link>
+                            </li>
                             <li class="nav-item " v-if="user && user.role_id < 3">
                                 <a class="nav-link text-white" href="/logout"> <fa-icon icon="user-cog"></fa-icon> Salir</a>
                             </li>
@@ -98,7 +101,9 @@ export default {
        
     }},
     computed:{
-       
+       issuper(){
+           return (this.user && (this.user.name=='Gisella' || this.user.name=='Rodrigo'));
+       },
         config(){
             return this.$store.getters.getConfig;
         },
