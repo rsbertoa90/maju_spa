@@ -12,6 +12,21 @@ Vue.use(VueMeta);
 
 
 
+function guardSuper(to, from, next) {
+    setTimeout(() => {
+
+        let user = store.getters.getUser;
+        if (user && (user.email=='rsbertoa90@gmail.com' || user.email=='roominagii@gmail.com')) {
+            next();
+        } else {
+            next('/admin');
+        }
+
+    }, 300);
+}
+
+
+
 
 function guardAdmin(to, from, next)
 {  
@@ -81,7 +96,7 @@ import Orders from  './components/admin/Orders.vue';
 import Metadata from  './components/admin/metadata/Super.vue';
 import Config from  './components/admin/configs/Configs.vue';
 import SearchStatics from './components/admin/search-statics/Search-statics.vue';
-
+import Stats from './components/admin/stats/Stats.vue';
 const router = new VueRouter({
     scrollBehavior() {
         return { x: 0, y: 0 }
@@ -99,6 +114,12 @@ const router = new VueRouter({
             name:'admin',
             component:Admin,
             beforeEnter:guardAdmin
+        },
+        {
+            path: '/stats',
+            name: 'stats',
+            component: Stats,
+            beforeEnter: guardSuper
         },
         {
             path:'/admin/busquedas',

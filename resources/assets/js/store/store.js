@@ -13,9 +13,13 @@ export const store = new Vuex.Store({
         categories:[],
         meta:[],
         searchTerm:'',
+        orders:[],
       
     },
     getters: {
+        getOrders(store){
+            return store.orders;
+        },
         getSearchTerm(store){
             return store.searchTerm;
         },
@@ -124,6 +128,10 @@ export const store = new Vuex.Store({
             state.meta = payload;
 
         },
+        setOrders(state, payload) {
+            state.orders = payload;
+
+        },
         setUser(state, payload) {
             state.user = payload;
 
@@ -163,6 +171,14 @@ export const store = new Vuex.Store({
                 .then(response => {
                     commit('setMeta', response.data);
                 });
+        },
+        fetchOrders: ({
+            commit
+        }, payload) => {
+             Vue.http.get('/api/orders')
+                 .then(response => {
+                    commit('setOrders',response.data);
+                 });
         },
         fetchConfig: ({
             commit

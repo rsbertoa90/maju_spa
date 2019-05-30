@@ -1,9 +1,19 @@
-Vue.filter('price', val => {
-    if (val % 1 != 0) {
-        return val.toFixed(2);
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return parts.join(",");
+
+}
+
+
+Vue.filter('price', value => {
+    if (value % 1 != 0) {
+        return numberWithCommas(value.toFixed(2));
     }
-    return val;
+    return value;
 });
+
 Vue.filter('ucFirst', val => {
     val = val.toLowerCase();
 
@@ -11,4 +21,11 @@ Vue.filter('ucFirst', val => {
 });
 Vue.filter('uc', val => {
     return val.toUpperCase();
+});
+
+Vue.filter('datetime', val => {
+    return moment(val).format('DD/MM/YYYY H:mm');
+});
+Vue.filter('date', val => {
+    return moment(val).format('DD/MM/YYYY');
 });

@@ -33,7 +33,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "animate.css": "^3.6.1",
         "intersection-observer": "^0.6.0",
-        "moment": "^2.22.2",
+        "moment": "^2.24.0",
         "swal": "^0.1.0",
         "sweetalert": "^2.1.0",
         "v-lazy-image": "^1.2.2",
