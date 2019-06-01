@@ -1,40 +1,47 @@
 <template>
-    <div class="containing p-4">
+    <div class="containing row w-100 p-4">
         <div class="date-selectors w-100 d-flex">
-            <div class="d-flex flex-column">
-                <label>Fecha desde</label>
-                <v-datepicker v-model="startDate" :lang="es"></v-datepicker>
-            </div>
-            <div class="d-flex flex-column">
-                <label>Fecha hasta</label>
-                <v-datepicker v-model="endDate" :lang="es"></v-datepicker>
-            </div>
-            <div class="d-flex align-items-end font-weight-bold" >
-                <div v-if="totalorders" class="ml-4">
-                   Pedidos: {{totalorders}}
+                <div class="d-flex flex-column">
+                    <label>Fecha desde</label>
+                    <v-datepicker v-model="startDate" :lang="es"></v-datepicker>
                 </div>
-                <div v-if="totalmoney" clasS="ml-4">
-                   Total: ${{totalmoney | price}}
+                <div class="d-flex flex-column">
+                    <label>Fecha hasta</label>
+                    <v-datepicker v-model="endDate" :lang="es"></v-datepicker>
                 </div>
-            </div>
+                <div class="d-flex align-items-end font-weight-bold" >
+                    <div v-if="totalorders" class="ml-4">
+                    Pedidos: {{totalorders}}
+                    </div>
+                    <div v-if="totalmoney" clasS="ml-4">
+                    Total: ${{totalmoney | price}}
+                    </div>
+                </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <th> Fecha </th>
-                <th> Pedidos</th>
-                <th>Total de la fecha</th>
-            </thead>
-            <tbody>
-                <tr v-for="(d, key) in sortedData" :key="key">
-                    <td>
-                        {{d.date |date }}
-                    </td>
-                    <td>{{d.times}}</td>
-                    <td>${{d.total | price}}</td>
-                </tr>
-                
-            </tbody>
-        </table>
+        <div class="col-6">
+
+          
+            <table class="table table-striped">
+                <thead>
+                    <th> Fecha </th>
+                    <th> Pedidos</th>
+                    <th>Total de la fecha</th>
+                </thead>
+                <tbody>
+                    <tr v-for="(d, key) in sortedData" :key="key" @click="selected=d" style="cursor:pointer;">
+                        <td>
+                            {{d.date |date }}
+                        </td>
+                        <td>{{d.times}}</td>
+                        <td>${{d.total | price}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6" v-if="selected">
+            <detail :orders="selected.detail"></detail>
+        </div>
     </div>
 </template>
 
@@ -42,15 +49,18 @@
 <script>
 
 import Datepicker from 'vuejs-datepicker';
+import detailorder from './detail.vue'
 import { es } from 'vuejs-datepicker/dist/locale'
 import datamixin from '../../datamixin.js';
 export default {
     mixins:['datamixin'],
      components:{
-        'v-datepicker':Datepicker
+        'v-datepicker':Datepicker,
+        'detail':detailorder,
     },
     data(){
         return{
+            selected:null,
             es:es,
             history:null,
             startDate:new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -146,6 +156,7 @@ export default {
                                 isNew =false;
                                 o.times++;
                                 o.total=o.total+order.total;
+                                o.detail.push(order);
                             }
                         });
                         if (isNew){
@@ -154,7 +165,8 @@ export default {
                                 date:date,
                                 times:1,
                                 total:order.total,
-                                rawdate:order.created_at
+                                rawdate:order.created_at,
+                                detail:[order]
                             });
                         }
                     }
