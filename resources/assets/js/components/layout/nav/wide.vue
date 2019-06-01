@@ -102,7 +102,7 @@ export default {
     }},
     computed:{
        issuper(){
-           return (this.user && (this.user.name=='Gisella' || this.user.name=='Rodrigo'));
+           return (this.user && (this.user.email=='rsbertoa90@gmail.com' || this.user.email=='roominagii@gmail.com'));
        },
         config(){
             return this.$store.getters.getConfig;
