@@ -10,7 +10,7 @@
             <tbody> 
                 <tr v-for="o in orders" :key="o.id">
                     <td>{{o.name}}</td>
-                    <td>${{o.total}}</td>
+                    <td>${{o.total |price}}</td>
                     <td>{{o.status}}</td>
                 </tr>
             </tbody>
