@@ -14,9 +14,13 @@ export const store = new Vuex.Store({
         meta:[],
         searchTerm:'',
         orders:[],
+        loading:false,
       
     },
     getters: {
+        getLoading(store){
+            return store.loading;
+        },
         getOrders(store){
             return store.orders;
         },
@@ -115,6 +119,9 @@ export const store = new Vuex.Store({
         
     },
     mutations: {
+        setLoading(state,payload){
+            state.loading=payload;
+        },
         setSearchTerm(state,payload){
             
             state.searchTerm = payload;

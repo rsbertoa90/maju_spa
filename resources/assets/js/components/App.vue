@@ -20,7 +20,7 @@
      
          <total-bouncer :total="total" v-if="$route.path != '/carrito'" ></total-bouncer>
 
-       
+        <dotLoading></dotLoading>
     </div>
 </template>
 
@@ -30,9 +30,9 @@ import totalBouncer from './layout/total-bouncer/total-bouncer.vue';
 import whatsappBtn from './layout/whatsapp.vue';
 import appFooter from './layout/footer/Footer.vue';
 import appNav from './layout/navbar.vue';
-
+import dotLoading from './layout/loading.vue';
 export default {
-    components:{appNav,whatsappBtn,totalBouncer,appFooter},
+    components:{appNav,whatsappBtn,totalBouncer,appFooter,dotLoading},
     computed:{
         user(){
             return this.$store.getters.getUser;

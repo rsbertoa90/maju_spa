@@ -74,6 +74,29 @@ export default {
         }
     },
     methods:{
+        formValid(){
+            let res =false;
+            if (this.formData.name == ''){
+                swal('Ups','falta el nombre','error')
+                return false;
+            }
+            else if (this.formData.email == ''){
+                swal('Ups','Falta el mail','error')
+                return false;
+
+            }
+            else if (this.formData.phone == ''){
+                swal('Ups','Falta el telefono','error')
+                return false;
+            }
+            else if (this.formData.message == ''){
+                swal('Ups','No escribiste ningun mensaje','error');
+                return false;
+            }
+            else{
+                return true;
+            }
+        },
         resetForm(){
             this.state=null;
             this.formData= {
@@ -85,18 +108,25 @@ export default {
 
             }
         },
+        
         send(){
-            this.$http.post('/contacto',this.formData)
-                .then(r => {
-                    swal('Enviamos tu mensaje','Un asesor de ventas se estara comunicando con vos a la brevedad','success');
-                    this.resetForm();
-                });
+            if(this.formValid()){
+        
+                this.$store.commit('setLoading',true);
+                this.$http.post('/contacto',this.formData)
+                    .then(r => {
+                        swal('Enviamos tu mensaje','Un asesor de ventas se estara comunicando con vos a la brevedad','success');
+                        this.resetForm();
+                        this.$store.commit('setLoading',false);
+                    });
+            }
         }
     },
     computed:{
         states(){
             return this.$store.getters.getStates;
-        }
+        },
+        
     }
 }
 </script>
